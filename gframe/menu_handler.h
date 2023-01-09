@@ -10,6 +10,7 @@ namespace ygo {
 
 // These are passed to Irrlicht constructors as IDs and useful for identifying spawned GUI events
 enum GUI {
+	BUTTON_AI_BOT_TEST_MODE,
 	BUTTON_LAN_MODE,
 	BUTTON_SINGLE_MODE,
 	BUTTON_REPLAY_MODE,

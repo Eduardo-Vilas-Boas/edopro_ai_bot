@@ -436,6 +436,10 @@ public:
 	irr::gui::IGUIButton* btnJoinHost;
 	irr::gui::IGUIButton* btnJoinCancel;
 	irr::gui::IGUIButton* btnCreateHost;
+	//AI Bot Test
+	bool isAIBotTesting;
+	irr::gui::IGUIWindow* wAIBotTestWindow;
+	irr::gui::IGUIButton* btnAIBotTestMode;
 	//create host
 	irr::gui::CGUIWindowedTabControl* wtcCreateHost;
 	irr::gui::IGUIWindow* wCreateHost;

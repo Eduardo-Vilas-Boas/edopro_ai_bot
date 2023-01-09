@@ -267,6 +267,9 @@ void Game::Initialize() {
 	btnLanMode = env->addButton(OFFSET(10, 30, 270, 60), wMainMenu, BUTTON_LAN_MODE, gDataManager->GetSysString(1200).data());
 	defaultStrings.emplace_back(btnLanMode, 1200);
 	offset += 35;
+	btnAIBotTestMode = env->addButton(OFFSET(10, 30, 270, 60), wMainMenu, BUTTON_AI_BOT_TEST_MODE, gDataManager->GetSysString(2700).data());
+	defaultStrings.emplace_back(btnLanMode, 2700);
+	offset += 35;
 	btnSingleMode = env->addButton(OFFSET(10, 65, 270, 95), wMainMenu, BUTTON_SINGLE_MODE, gDataManager->GetSysString(1201).data());
 	defaultStrings.emplace_back(btnSingleMode, 1201);
 	offset += 35;

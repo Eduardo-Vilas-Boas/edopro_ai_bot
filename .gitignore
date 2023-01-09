@@ -280,3 +280,4 @@ vcpkg.exe
 /windbot
 /.vcpkg-root
 /fonts
+/crashdumps

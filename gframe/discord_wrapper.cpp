@@ -200,6 +200,7 @@ struct DiscordCallbacks {
 				game->deckBuilder.Terminate(false);
 			HIDE_AND_CHECK(game->wMainMenu);
 			HIDE_AND_CHECK(game->wLanWindow);
+			HIDE_AND_CHECK(game->wAIBotTestWindow);
 			HIDE_AND_CHECK(game->wCreateHost);
 			HIDE_AND_CHECK(game->wReplay);
 			HIDE_AND_CHECK(game->wSinglePlay);
