@@ -113,7 +113,7 @@ void Game::Initialize() {
 	device->enableDragDrop(true, [](irr::core::vector2di pos, bool isFile) ->bool {
 		if(isFile) {
 			if(mainGame->dInfo.isInDuel || mainGame->dInfo.isInLobby || mainGame->is_siding
-			   || mainGame->wRoomListPlaceholder->isVisible() || mainGame->wLanWindow->isVisible()
+			   || mainGame->wRoomListPlaceholder->isVisible() || mainGame->wLanWindow->isVisible() || mainGame->wAIBotTestWindow->isVisible()
 			   || mainGame->wCreateHost->isVisible() || mainGame->wHostPrepare->isVisible())
 				return false;
 			else
@@ -312,6 +312,40 @@ void Game::Initialize() {
 	btnJoinCancel = env->addButton(Scale(460, 385, 570, 410), wLanWindow, BUTTON_JOIN_CANCEL, gDataManager->GetSysString(1212).data());
 	defaultStrings.emplace_back(btnJoinCancel, 1212);
 	btnCreateHost = env->addButton(Scale(460, 25, 570, 50), wLanWindow, BUTTON_CREATE_HOST, gDataManager->GetSysString(1224).data());
+	defaultStrings.emplace_back(btnCreateHost, 1224);
+	btnCreateHost->setEnabled(coreloaded);
+
+	PopulateGameHostWindows();
+
+
+	//AI Bot Test mode
+	wAIBotTestWindow = env->addWindow(Scale(220, 100, 800, 520), false, gDataManager->GetSysString(2700).data());
+	defaultStrings.emplace_back(wAIBotTestWindow, 2700);
+	wAIBotTestWindow->getCloseButton()->setVisible(false);
+	wAIBotTestWindow->setVisible(false);
+	tmpptr = env->addStaticText(gDataManager->GetSysString(1220).data(), Scale(10, 30, 220, 50), false, false, wAIBotTestWindow);
+	defaultStrings.emplace_back(tmpptr, 1220);
+	ebNickName = env->addEditBox(gGameConfig->nickname.data(), Scale(110, 25, 450, 50), true, wAIBotTestWindow, EDITBOX_NICKNAME);
+	ebNickName->setTextAlignment(irr::gui::EGUIA_UPPERLEFT, irr::gui::EGUIA_CENTER);
+	lstHostList = env->addListBox(Scale(10, 60, 570, 320), wAIBotTestWindow, LISTBOX_LAN_HOST, true);
+	lstHostList->setItemHeight(Scale(18));
+	btnLanRefresh = env->addButton(Scale(240, 325, 340, 350), wAIBotTestWindow, BUTTON_LAN_REFRESH, gDataManager->GetSysString(1217).data());
+	defaultStrings.emplace_back(btnLanRefresh, 1217);
+	tmpptr = env->addStaticText(gDataManager->GetSysString(1221).data(), Scale(10, 360, 220, 380), false, false, wAIBotTestWindow);
+	defaultStrings.emplace_back(tmpptr, 1221);
+	ebJoinHost = env->addEditBox(gGameConfig->lasthost.data(), Scale(110, 355, 350, 380), true, wAIBotTestWindow);
+	ebJoinHost->setTextAlignment(irr::gui::EGUIA_CENTER, irr::gui::EGUIA_CENTER);
+	ebJoinPort = env->addEditBox(gGameConfig->lastport.data(), Scale(360, 355, 420, 380), true, wAIBotTestWindow, EDITBOX_PORT_BOX);
+	ebJoinPort->setTextAlignment(irr::gui::EGUIA_CENTER, irr::gui::EGUIA_CENTER);
+	tmpptr = env->addStaticText(gDataManager->GetSysString(1222).data(), Scale(10, 390, 220, 410), false, false, wAIBotTestWindow);
+	defaultStrings.emplace_back(tmpptr, 1222);
+	ebJoinPass = env->addEditBox(gGameConfig->roompass.data(), Scale(110, 385, 420, 410), true, wAIBotTestWindow);
+	ebJoinPass->setTextAlignment(irr::gui::EGUIA_CENTER, irr::gui::EGUIA_CENTER);
+	btnJoinHost = env->addButton(Scale(460, 355, 570, 380), wAIBotTestWindow, BUTTON_JOIN_HOST, gDataManager->GetSysString(1223).data());
+	defaultStrings.emplace_back(btnJoinHost, 1223);
+	btnJoinCancel = env->addButton(Scale(460, 385, 570, 410), wAIBotTestWindow, BUTTON_JOIN_CANCEL, gDataManager->GetSysString(1212).data());
+	defaultStrings.emplace_back(btnJoinCancel, 1212);
+	btnCreateHost = env->addButton(Scale(460, 25, 570, 50), wAIBotTestWindow, BUTTON_CREATE_HOST, gDataManager->GetSysString(1224).data());
 	defaultStrings.emplace_back(btnCreateHost, 1224);
 	btnCreateHost->setEnabled(coreloaded);
 
@@ -2230,7 +2264,7 @@ bool Game::MainLoop() {
 		}
 		if(!wQuery->isVisible()) {
 			if(!update_prompted && gClientUpdater->HasUpdate() && !(dInfo.isInDuel || dInfo.isInLobby || is_siding
-				|| wRoomListPlaceholder->isVisible() || wLanWindow->isVisible()
+				|| wRoomListPlaceholder->isVisible() || wLanWindow->isVisible() || wAIBotTestWindow->isVisible()
 				|| wCreateHost->isVisible() || wHostPrepare->isVisible())) {
 				std::lock_guard<epro::mutex> lock(gMutex);
 				menuHandler.prev_operation = ACTION_UPDATE_PROMPT;
@@ -3590,6 +3624,7 @@ void Game::OnResize() {
 	stScale->setRelativePosition(ResizeWin(110, 74, 150, 94));
 
 	wLanWindow->setRelativePosition(ResizeWin(220, 100, 800, 520));
+	wAIBotTestWindow->setRelativePosition(ResizeWin(220, 100, 800, 520));
 	SetCentered(wCreateHost, false);
 	if(dInfo.opponames.size() + dInfo.selfnames.size() >= 5) {
 		wHostPrepare->setRelativePosition(ResizeWin(270, 120, 750, 500));

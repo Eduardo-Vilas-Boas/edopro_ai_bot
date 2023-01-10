@@ -220,6 +220,7 @@ bool MenuHandler::OnEvent(const irr::SEvent& event) {
 				}
 			}
 			case BUTTON_JOIN_CANCEL: {
+				mainGame->HideElement(mainGame->wAIBotTestWindow);
 				mainGame->HideElement(mainGame->wLanWindow);
 				mainGame->ShowElement(mainGame->wMainMenu);
 				break;
@@ -365,6 +366,8 @@ bool MenuHandler::OnEvent(const irr::SEvent& event) {
 					mainGame->HideElement(mainGame->wHostPrepareL);
 				if(mainGame->isHostingOnline)
 					mainGame->ShowElement(mainGame->wRoomListPlaceholder);
+				else if(mainGame->isAIBotTesting)
+					mainGame->ShowElement(mainGame->wAIBotTestWindow);
 				else
 					mainGame->ShowElement(mainGame->wLanWindow);
 				mainGame->wChat->setVisible(false);

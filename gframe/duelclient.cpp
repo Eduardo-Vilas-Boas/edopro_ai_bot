@@ -144,7 +144,10 @@ void DuelClient::ConnectTimeout(evutil_socket_t fd, short events, void* arg) {
 			if(!mainGame->wRoomListPlaceholder->isVisible())
 				mainGame->ShowElement(mainGame->wRoomListPlaceholder);
 		} else {
-			if(!mainGame->wLanWindow->isVisible())
+			if (mainGame->isAIBotTesting) {
+				mainGame->ShowElement(mainGame->wAIBotTestWindow);
+			}
+			else if(!mainGame->wLanWindow->isVisible())
 				mainGame->ShowElement(mainGame->wLanWindow);
 		}
 		mainGame->PopupMessage(gDataManager->GetSysString(1400));
@@ -396,7 +399,10 @@ void DuelClient::HandleSTOCPacketLanAsync(const std::vector<uint8_t>& data) {
 				if(!mainGame->wCreateHost->isVisible() && !mainGame->wRoomListPlaceholder->isVisible())
 					mainGame->ShowElement(mainGame->wRoomListPlaceholder);
 			} else {
-				if(!mainGame->wLanWindow->isVisible())
+				if (mainGame->isAIBotTesting) {
+					mainGame->ShowElement(mainGame->wAIBotTestWindow);
+				}
+				else if(!mainGame->wLanWindow->isVisible())
 					mainGame->ShowElement(mainGame->wLanWindow);
 			}
 			mainGame->PopupMessage(gDataManager->GetSysString(1400));
@@ -414,7 +420,12 @@ void DuelClient::HandleSTOCPacketLanAsync(const std::vector<uint8_t>& data) {
 				if(mainGame->isHostingOnline) {
 					mainGame->ShowElement(mainGame->wRoomListPlaceholder);
 				} else {
-					mainGame->ShowElement(mainGame->wLanWindow);
+					if (mainGame->isAIBotTesting) {
+						mainGame->ShowElement(mainGame->wAIBotTestWindow);
+					}
+					else {
+						mainGame->ShowElement(mainGame->wLanWindow);
+					}
 				}
 				mainGame->wChat->setVisible(false);
 				if(iseof)
@@ -442,7 +453,11 @@ void DuelClient::HandleSTOCPacketLanAsync(const std::vector<uint8_t>& data) {
 				mainGame->device->setEventReceiver(&mainGame->menuHandler);
 				if(mainGame->isHostingOnline) {
 					mainGame->ShowElement(mainGame->wRoomListPlaceholder);
-				} else {
+				}
+				else if (mainGame->isAIBotTesting) {
+					mainGame->ShowElement(mainGame->wLanWindow);
+				}
+				else {
 					mainGame->ShowElement(mainGame->wLanWindow);
 				}
 				mainGame->SetMessageWindow();
@@ -888,8 +903,12 @@ void DuelClient::HandleSTOCPacketLanAsync(const std::vector<uint8_t>& data) {
 		mainGame->cbDeckSelect->setEnabled(true);
 		if(mainGame->wCreateHost->isVisible())
 			mainGame->HideElement(mainGame->wCreateHost);
-		else if (mainGame->wLanWindow->isVisible())
+		else if (mainGame->isAIBotTesting) {
 			mainGame->HideElement(mainGame->wLanWindow);
+		}
+		else if (mainGame->wLanWindow->isVisible()) {
+			mainGame->HideElement(mainGame->wLanWindow);
+		}
 		mainGame->ShowElement(mainGame->wHostPrepare);
 		if(strR.size())
 			mainGame->ShowElement(mainGame->wHostPrepareR);
@@ -1306,7 +1325,12 @@ int DuelClient::ClientAnalyze(const uint8_t* msg, uint32_t len) {
 				if(mainGame->isHostingOnline) {
 					mainGame->ShowElement(mainGame->wRoomListPlaceholder);
 				} else {
-					mainGame->ShowElement(mainGame->wLanWindow);
+					if (mainGame->isAIBotTesting) {
+						mainGame->ShowElement(mainGame->wAIBotTestWindow);
+					}
+					else {
+						mainGame->ShowElement(mainGame->wLanWindow);
+					}
 				}
 				mainGame->SetMessageWindow();
 			}

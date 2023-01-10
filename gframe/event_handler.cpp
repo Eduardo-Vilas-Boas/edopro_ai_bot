@@ -195,7 +195,12 @@ bool ClientField::OnEvent(const irr::SEvent& event) {
 					if(mainGame->isHostingOnline) {
 						mainGame->ShowElement(mainGame->wRoomListPlaceholder);
 					} else {
-						mainGame->ShowElement(mainGame->wLanWindow);
+						if (mainGame->isAIBotTesting) {
+							mainGame->ShowElement(mainGame->wAIBotTestWindow);
+						}
+						else {
+							mainGame->ShowElement(mainGame->wLanWindow);
+						}
 					}
 					mainGame->SetMessageWindow();
 				} else {
