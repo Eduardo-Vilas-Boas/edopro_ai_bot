@@ -440,6 +440,15 @@ public:
 	bool isAIBotTesting;
 	irr::gui::IGUIWindow* wAIBotTestWindow;
 	irr::gui::IGUIButton* btnAIBotTestMode;
+	irr::gui::IGUIStaticText* stAIBotDeckA;
+	irr::gui::IGUIStaticText* stAIBotDeckB;
+	irr::gui::IGUIComboBox* cbAIBotSelectBotA;
+	irr::gui::IGUIComboBox* cbAIBotSelectBotB;
+	irr::gui::IGUIComboBox* cbAIBotDeckListA;
+	irr::gui::IGUIComboBox* cbAIBotDeckListB;
+	irr::gui::IGUIButton* btnAIBotTestLaunch;
+	irr::gui::IGUIButton* btnAIBotTestCancel;
+
 	//create host
 	irr::gui::CGUIWindowedTabControl* wtcCreateHost;
 	irr::gui::IGUIWindow* wCreateHost;
