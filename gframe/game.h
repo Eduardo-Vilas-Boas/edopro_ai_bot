@@ -379,6 +379,7 @@ public:
 	void PopulateGameHostWindows();
 	void PopulateTabSettingsWindow();
 	void PopulateSettingsWindow();
+	void PopulateAIBotWindow();
 	SettingsWindow gSettings;
 	irr::gui::IGUIWindow* wBtnSettings;
 	irr::gui::CGUIImageButton* btnSettings;

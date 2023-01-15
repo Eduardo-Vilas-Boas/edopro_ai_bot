@@ -323,21 +323,30 @@ void Game::Initialize() {
 	defaultStrings.emplace_back(wAIBotTestWindow, 2700);
 	wAIBotTestWindow->getCloseButton()->setVisible(false);
 	wAIBotTestWindow->setVisible(false);
+
 	tmpptr = env->addStaticText(gDataManager->GetSysString(2701).data(), Scale(10, 30, 70, 50), false, false, wAIBotTestWindow);
 	defaultStrings.emplace_back(tmpptr, 2701);
-	tmpptr = env->addStaticText(gDataManager->GetSysString(2702).data(), Scale(10, 60, 70, 80), false, false, wAIBotTestWindow);
-	defaultStrings.emplace_back(tmpptr, 2702);
+	cbAIBotSelectBotA = AddComboBox(env, Scale(90, 25, 180, 50), wAIBotTestWindow, COMBOBOX_AIBOT_SELECT_BOT_A);
 	tmpptr = env->addStaticText(gDataManager->GetSysString(2703).data(), Scale(180, 30, 240, 50), false, false, wAIBotTestWindow);
 	defaultStrings.emplace_back(tmpptr, 2703);
+	cbAIBotDeckListA = AddComboBox(env, Scale(250, 25, 340, 50), wAIBotTestWindow, COMBOBOX_AIBOT_SELECT_DECK_A);
+
+	tmpptr = env->addStaticText(gDataManager->GetSysString(2702).data(), Scale(10, 60, 70, 80), false, false, wAIBotTestWindow);
+	defaultStrings.emplace_back(tmpptr, 2702);
+	cbAIBotSelectBotB = AddComboBox(env, Scale(90, 60, 180, 75), wAIBotTestWindow, COMBOBOX_AIBOT_SELECT_BOT_B);
 	tmpptr = env->addStaticText(gDataManager->GetSysString(2704).data(), Scale(180, 60, 240, 80), false, false, wAIBotTestWindow);
 	defaultStrings.emplace_back(tmpptr, 2704);
+	cbAIBotDeckListB = AddComboBox(env, Scale(250, 60, 340, 75), wAIBotTestWindow, COMBOBOX_AIBOT_SELECT_DECK_B);
+
 	btnAIBotTestLaunch = env->addButton(Scale(460, 385, 570, 410), wAIBotTestWindow, BUTTON_AIBOT_TEST_LAUNCH, gDataManager->GetSysString(1212).data());
 	defaultStrings.emplace_back(btnAIBotTestLaunch, 1212);
 	btnAIBotTestCancel = env->addButton(Scale(340, 385, 450, 410), wAIBotTestWindow, BUTTON_AIBOT_TEST_CANCEL, gDataManager->GetSysString(1224).data());
 	defaultStrings.emplace_back(btnAIBotTestCancel, 1224);
-	// btnAIBotTestLaunch->setEnabled(coreloaded);
+	
 
-	PopulateGameHostWindows();
+	PopulateAIBotWindow();
+
+	// btnAIBotTestLaunch->setEnabled(coreloaded);
 
 	//img
 	wCardImg = env->addStaticText(L"", Scale(1, 1, 1 + CARD_IMG_WRAPPER_WIDTH, 1 + CARD_IMG_WRAPPER_HEIGHT), true, false, 0, -1, true);
@@ -2739,6 +2748,14 @@ void Game::UpdateRepoInfo(const GitRepo* repo, RepoGui* grepo) {
 		}
 	}
 }
+
+void Game::PopulateAIBotWindow() {
+
+	mainGame->RefreshDeck(mainGame->cbAIBotDeckListA);
+	mainGame->RefreshDeck(mainGame->cbAIBotDeckListB);
+
+}
+
 void Game::LoadServers() {
 	for(auto& _config : { &gGameConfig->user_configs, &gGameConfig->configs }) {
 		auto& config = *_config;
